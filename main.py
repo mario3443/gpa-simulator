@@ -1,3 +1,5 @@
+from data_manager import load_courses, save_courses
+
 def print_menu():
     print("\n GPA 模擬器")
     print("1. 查看目前課程與 GPA")
@@ -6,7 +8,7 @@ def print_menu():
 
 
 def main():
-    courses = []
+    courses = load_courses()  # 從檔案讀取課程資料
 
     while True:
         print_menu()
@@ -20,7 +22,9 @@ def main():
                 total_credits = 0
                 total_points = 0
                 for course in courses:
-                    name, credit, grade = course
+                    name = course["name"] #轉換成json的格式來讀檔案
+                    credit = course["credit"]
+                    grade = course["grade"]
                     gpa_point = grade_to_gpa(grade)
                     print(f"{name}｜{credit} 學分｜等第：{grade}｜GPA：{gpa_point}")
                     total_credits += credit
@@ -33,7 +37,8 @@ def main():
             name = input("請輸入課程名稱：")
             credit = int(input("請輸入學分數："))
             grade = input("請輸入等第（例如 A、B+、C-）：").upper()
-            courses.append((name, credit, grade))
+            courses.append({"name": name, "credit": credit, "grade": grade})
+            save_courses(courses) # 將課程資料存到檔案中
             print("課程已新增！，可以輸入1來做確認")
 
         elif choice == "3":
