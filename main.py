@@ -1,4 +1,5 @@
 from data_manager import load_courses, save_courses
+from gpa_calculator import grade_to_gpa, calculate_weighted_gpa #精簡main版面
 
 def print_menu():
     print("\n GPA 模擬器")
@@ -30,7 +31,7 @@ def main():
                     total_credits += credit
                     total_points += credit * gpa_point
 
-                overall_gpa = total_points / total_credits if total_credits > 0 else 0
+                overall_gpa = calculate_weighted_gpa(courses)
                 print(f"\n 目前加權平均 GPA：{overall_gpa:.2f}")
 
         elif choice == "2":
@@ -47,23 +48,6 @@ def main():
 
         else:
             print("請輸入有效的選項（1~3）")
-
-
-# 將GPA轉換為分數
-def grade_to_gpa(grade):
-    gpa_scale = {
-        "A+": 4.3,
-        "A": 4.0,
-        "A-": 3.7,
-        "B+": 3.3,
-        "B": 3.0,
-        "B-": 2.7,
-        "C+": 2.3,
-        "C": 2.0,
-        "C-": 1.7,
-        "F": 0.0
-    }
-    return gpa_scale.get(grade, 0.0)  # 若今天輸入奇怪的東西會被算做0
 
 
 if __name__ == "__main__":
