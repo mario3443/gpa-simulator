@@ -6,7 +6,8 @@ def print_menu():
     print("1. 查看目前課程與 GPA")
     print("2. 新增一門課")
     print("3. 離開")
-    print("4. 刪除課程")  # 新增選項來清除不要的課程資料
+    print("4. 刪除課程")  
+    print("5. 模擬 GPA")  # 新增選項來模擬如果 GPA改動的情況
 
 
 def main():
@@ -64,8 +65,32 @@ def main():
                         print("輸入了錯的編號喔，請再試一次。")
                 except ValueError:
                     print("請輸入有效的數字。")
+        elif choice == "5":
+            if not courses:
+                print("目前沒有任何課程可以模擬 GPA改動。")
+            else:
+                print("\n目前課程列表：")
+                for i, course in enumerate(courses, start=1):
+                    print(f"{i}. {course['name']}｜{course['credit']} 學分｜等第：{course['grade']}")
+                
+                try:
+                    index = int(input("請輸入要模擬的課程編號：")) - 1
+                    if 0 <= index < len(courses):
+                        simulator_grade = input("請輸入要模擬的等第（例如 A、B+、C-）：").upper()
+                        simulator_course = courses.copy()
+                        simulator_course[index] = {
+                            "name": courses[index]["name"],
+                            "credit": courses[index]["credit"],
+                            "grade": simulator_grade
+                        }
+                        simulator_gpa = calculate_weighted_gpa(simulator_course)
+                        print(f"模擬後的加權平均 GPA：{simulator_gpa:.2f}")
+                    else:
+                        print("輸入了錯的編號喔，請再試一次。")
+                except ValueError:
+                    print("請輸入有效的數字。")
         else:
-            print("請輸入有效的選項（1~4）")
+            print("請輸入有效的選項（1~5）")
 
 
 if __name__ == "__main__":
