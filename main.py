@@ -1,5 +1,6 @@
 from data_manager import load_courses, save_courses
 from gpa_calculator import grade_to_gpa, calculate_weighted_gpa #精簡main版面
+from prompts import generate_gpt_advise
 
 def print_menu():
     print("\n GPA 模擬器")
@@ -8,6 +9,7 @@ def print_menu():
     print("3. 離開")
     print("4. 刪除課程")  
     print("5. 模擬 GPA")  # 新增選項來模擬如果 GPA改動的情況
+    print("6. 請GPT給我建議")  # 新增選項來獲取 GPT 建議
 
 
 def main():
@@ -89,8 +91,16 @@ def main():
                         print("輸入了錯的編號喔，請再試一次。")
                 except ValueError:
                     print("請輸入有效的數字。")
+        elif choice == "6":
+            if not courses:
+                print("目前沒有任何課程可以請 GPT 給建議。")
+            else:
+                print("ChatGPT正在分析，請燒等喔...")
+                advice = generate_gpt_advise(courses)
+                print("\nGPT 建議：")
+                print(advice)
         else:
-            print("請輸入有效的選項（1~5）")
+            print("請輸入有效的選項（1~6）")
 
 
 if __name__ == "__main__":

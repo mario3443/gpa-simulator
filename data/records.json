@@ -8,5 +8,10 @@
     "name": "測試2",
     "credit": 3,
     "grade": "A"
+  },
+  {
+    "name": "危機分",
+    "credit": 4,
+    "grade": "B-"
   }
 ]
